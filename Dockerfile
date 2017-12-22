@@ -29,6 +29,7 @@ COPY ./ /app
 WORKDIR /app
 
 RUN pip install -r requirements.txt
+RUN bash install.sh
 RUN rm -rf /app/*
 ENV NGINX_MAX_UPLOAD 0
 

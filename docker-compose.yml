@@ -1,31 +1,15 @@
 version: '3'
 services:
   web:
-    image: rps
-    container_name: rps
+    image: chatbot
+    container_name: chatbot
     volumes:
       - ./:/app
     ports:
-      - "5000:5000"
+      - "5002:5000"
     environment:
-      - FLASK_APP=main.py
+      - FLASK_APP=app.py
       - FLASK_DEBUG=1
       - COMPOSE_HTTP_TIMEOUT=200
       # - 'RUN=flask run --host=0.0.0.0 --port=80'
-    command: bash -c "make clean && make debug"
-    # command: bash -c "cd frontend && yarn install --force && yarn run docker && cd .."
-    # Infinite loop, to keep it alive, for debugging
-    # command: bash -c "while true; do echo 'sleeping...' && sleep 10; done"
-  socket:
-    image: rps
-    container_name: socket
-    volumes:
-      - ./:/app
-    ports:
-      - "5001:5001"
-    environment:
-      - FLASK_APP=main.py
-      - FLASK_DEBUG=1
-      - COMPOSE_HTTP_TIMEOUT=200
-      # - 'RUN=flask run --host=0.0.0.0 --port=80'
-    command: bash -c "make socket"
+    command: bash -c "make app"
