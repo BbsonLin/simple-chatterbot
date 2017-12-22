@@ -1,7 +1,7 @@
-set :application, 'smatech-2017-rps'
+set :application, 'chatbot'
 set :keep_releases, 3
-set :repo_url, 'git@bitbucket.org:aiwill/smatech-2017-rps.git'
-set :deploy_to, '/var/www/smatech-2017-rps'
+set :repo_url, 'https://github.com/BbsonLin/simple-chatterbot.git'
+set :deploy_to, '/var/www/chatbot'
 ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 set :slackistrano, {
   klass: Slackistrano::CustomMessaging,
@@ -10,20 +10,10 @@ set :slackistrano, {
 }
 
 # Custom Variables
-set :image_name, 'rps'
-set :yarn_image, 'yarn'
-set :container_name, 'rps'
+set :image_name, 'chatbot'
+set :container_name, 'chatbot'
 set :docker, 'docker'
 set :docker_compose, 'docker-compose'
-
-# if ENV['BASTION']
-#   require 'net/ssh/proxy/command'
-#   bastion_host = 'your.bastion.machine'
-#   bastion_user = 'your_ssh_account'
-#   bastion_port = 22
-#   ssh_command = "ssh -p #{bastion_port} #{bastion_user}@#{bastion_host} -W %h:%p"
-#   set :ssh_options, proxy: Net::SSH::Proxy::Command.new(ssh_command)
-# end
 
 namespace :deploy do
 
@@ -31,12 +21,9 @@ namespace :deploy do
   task :dockerize do
     on roles(:all) do
       previous = capture("ls -t1 #{releases_path} | sed -n '2p'").to_s.strip
-      execute "cd #{release_path} && #{fetch(:docker)} build --rm -t #{fetch(:image_name)} ."
-      # execute "cd #{release_path} && #{fetch(:docker)} build --rm -t #{fetch(:yarn_image)} -f Dockerfile.yarn ."
-      execute "cd #{releases_path}/#{previous} && #{fetch(:docker_compose)} down"
-      # execute "cd #{releases_path}/#{previous} && #{fetch(:docker_compose)} -f build.yml down"
-      # execute "cd #{release_path} && #{fetch(:docker_compose)} -f build.yml up"
-      execute "cd #{release_path} && #{fetch(:docker_compose)} up -d"
+        execute "cd #{release_path} && #{fetch(:docker)} build --rm -t #{fetch(:image_name)} ."
+        execute "cd #{releases_path}/#{previous} && #{fetch(:docker_compose)} down"
+        execute "cd #{release_path} && #{fetch(:docker_compose)} up -d"
     end
   end
 
