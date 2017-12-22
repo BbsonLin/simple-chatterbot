@@ -1,6 +1,6 @@
 import speech_recognition as sr
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer
 
@@ -19,7 +19,7 @@ def index():
 @app.route('/reply', methods=['GET'])
 def reply():
     userText = request.args.get('msg')
-    return str(chinese_bot.get_response(userText))
+    return jsonify(msg=str(chinese_bot.get_response(userText)))
 
 
 @app.route("/listen", methods=['POST'])
@@ -31,8 +31,8 @@ def listen():
     with sr.AudioFile('./listen.wav') as source:
         audio = r.record(source)
 
-    return r.recognize_google(audio, language="zh-CN")
+    return jsonify(msg=r.recognize_google(audio, language="zh-CN"))
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')

@@ -1,2 +1,4 @@
 # 
 public/
+*.wav
+*.sqlite3
