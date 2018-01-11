@@ -1,5 +1,8 @@
-#
 public/
 *.wav
 *.sqlite3
 log/
+Gemfile.lock
+frontend/dist/
+frontend/node_module/
+frontend/yarn.lock
