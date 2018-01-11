@@ -2,7 +2,10 @@ public/
 *.wav
 *.sqlite3
 log/
+Capfile
+Gemfile
 Gemfile.lock
 frontend/dist/
 frontend/node_module/
 frontend/yarn.lock
+config/
